@@ -1,0 +1,25 @@
+{
+  "name": "traverse-vue",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EricVignola/traverse-vue.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EricVignola/traverse-vue/issues"
+  },
+  "homepage": "https://github.com/EricVignola/traverse-vue#readme",
+  "dependencies": {
+    "express": "^4.16.1",
+    "hogan-express": "^0.5.2",
+    "pg": "^7.3.0"
+  },
+  "devDependencies": {}
+}
