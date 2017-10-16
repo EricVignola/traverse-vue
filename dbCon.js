@@ -13,16 +13,15 @@ function connect(){
 }
 
 //this is a test function to print the step text of all of the steps in the db
-function getStep(){
+function getStep(callback){
   client.query('SELECT * FROM steps', (err, result) => {
     if(err) return console.log(err);
-    for (let i = 0; i < result.rows.length; i++){
-      console.log(result.rows[i].step_text);
-    }
+    callback(err, result);
   });
 }
 
 module.exports = {
   connect,
+  client,
   getStep
 }

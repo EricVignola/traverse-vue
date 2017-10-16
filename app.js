@@ -11,8 +11,6 @@ app.use(express.static(__dirname + "/public"));
 //connect to db using the dbCon.js module
 db.connect();
 
-db.getStep();
-
 //setting hogan as our templating engine
 app.engine('hjs', hjs); //the hjs in single quotes lets express know what file extension to use hogan templating on
 app.set('views', path.join(__dirname + "/views"));
@@ -28,7 +26,12 @@ app.set('partials', {
 
 //creating route for base url
 app.get('/', (req, res) => {
-  res.render('layout');
+  db.getStep((err, result) => {
+    if(err) return console.log(err);
+    res.render('layout', {
+      result: result.rows[0]
+    });
+  });
 });
 
 app.listen(3000, () => {
