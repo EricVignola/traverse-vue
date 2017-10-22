@@ -3,7 +3,10 @@ const express = require('express'),
       pg = require('pg'),
       db = require('./dbCon'),
       hjs = require('hogan-express'),
+      parseBody = require('./middleware/parseBody'),
       app = express();
+
+const PORT = 3000;
 
 //letting express know where to find our css, js, and img
 app.use(express.static(__dirname + "/public"));
@@ -34,6 +37,13 @@ app.get('/', (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log("server listening on port 3000");
+app.use('/submitted', parseBody.parse);
+
+app.post('/submitted', (req, res) => {
+  console.log(req.body.answer);
+  res.end('<p>Thank you for your response</p>');
+});
+
+app.listen(PORT, () => {
+  console.log(`server listening on port ${PORT}`);
 });

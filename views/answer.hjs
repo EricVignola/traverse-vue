@@ -1,0 +1,4 @@
+<form action="/submitted" method="post">
+  <input type="text" name="answer" value="">
+  <input type="submit">
+</form>
