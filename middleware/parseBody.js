@@ -1,8 +1,7 @@
 var cleanString = function(data) {
-  data = data.split(/[=&]/);
-  for(let i = 0; i < data.length; i++){
-    data[i] = data[i].replace(/[\+*]/g, " ");
-  }
+  data = data.split(/[=&]/).map(function replace(i) {
+    return i = i.replace(/[\+*]/g, " ");
+  });
   return data;
 }
 
