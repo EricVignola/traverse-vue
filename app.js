@@ -4,6 +4,7 @@ const express = require('express'),
       db = require('./dbCon'),
       hjs = require('hogan-express'),
       parseBody = require('./middleware/parseBody'),
+      expressValidator = require('express-validator'),
       app = express();
 
 const PORT = 3000;
@@ -24,24 +25,57 @@ app.set('view engine', 'hjs');
 //curly braces...that syntax works because we defined those partials here
 app.set('partials', {
   answer: 'answer',
-  step: 'step'
+  step: 'step',
+  errors: 'errors'
 });
+
+var playerStep = 0;
 
 //creating route for base url
 app.get('/', (req, res) => {
+  playerStep = 0;
   db.getStep((err, result) => {
     if(err) return console.log(err);
     res.render('layout', {
-      result: result.rows[0]
+      result: result.rows[playerStep]
     });
   });
 });
 
-app.use('/submitted', parseBody.parse);
+//sanitizing the user's answer
+app.use('/', parseBody.parse);
+app.use(expressValidator());
 
-app.post('/submitted', (req, res) => {
-  console.log(req.body.answer);
-  res.end('<p>Thank you for your response</p>');
+app.post('/', (req, res) => {
+  req.checkBody('answer', 'Answer required').notEmpty();
+
+  req.sanitize('answer').escape();
+  req.sanitize('answer').trim();
+
+  var errors = req.validationErrors();
+
+  if(errors){
+    db.getStep((err, result) => {
+      if(err) return console.log(err);
+      res.render('layout', {
+        result: result.rows[playerStep],
+        errors: errors
+      });
+    });
+  } else {
+    console.log(playerStep);
+    console.log(req.body.answer);
+    db.getStep((err, result) => {
+      if(err) return console.log(err);
+      if(req.body.answer === result.rows[playerStep].answer){
+        playerStep++;
+      }
+      
+      res.render('layout', {
+        result: result.rows[playerStep]
+      });
+    });
+  }
 });
 
 app.listen(PORT, () => {

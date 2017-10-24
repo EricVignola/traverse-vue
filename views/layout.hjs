@@ -8,8 +8,8 @@
     <title></title>
   </head>
   <body>
-    <h4>hello from layout</h4>
     {{> step}}
     {{> answer}}
+    {{> errors}}
   </body>
 </html>
