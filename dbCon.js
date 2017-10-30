@@ -12,16 +12,33 @@ function connect(){
   });
 }
 
-//this is a test function to print the step text of all of the steps in the db
-function getStep(callback){
+//this is a function to retrieve the immediate children of a given parent node
+function getChildren(parent, callback){
+  client.query(
+    `SELECT * FROM steps JOIN paths on (steps.id = paths.descendent_id)
+    WHERE paths.ancestor_id = ${parent.id} and paths.path_length = 1`, (err, result) => {
+      if(err) {
+        callback(err);
+      } else {
+        callback(err, result);
+      }
+    });
+}
+
+//this is a function to retrieve all of the columns in the steps table
+function getSteps(callback){
   client.query('SELECT * FROM steps', (err, result) => {
-    if(err) return console.log(err);
-    callback(err, result);
+    if(err) {
+      callback(err);
+    } else {
+      callback(err, result);
+    }
   });
 }
 
 module.exports = {
   connect,
   client,
-  getStep
-}
+  getSteps,
+  getChildren
+};

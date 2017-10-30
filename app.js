@@ -29,15 +29,16 @@ app.set('partials', {
   errors: 'errors'
 });
 
-var playerStep = 0;
+//variable to track the current step the player is on
+var currentStep;
 
 //creating route for base url
 app.get('/', (req, res) => {
-  playerStep = 0;
-  db.getStep((err, result) => {
-    if(err) return console.log(err);
+  db.getSteps((err, result) => {
+    if(err) throw err;
+    currentStep = result.rows[0];
     res.render('layout', {
-      result: result.rows[playerStep]
+      result: currentStep
     });
   });
 });
@@ -47,33 +48,53 @@ app.use('/', parseBody.parse);
 app.use(expressValidator());
 
 app.post('/', (req, res) => {
-  req.checkBody('answer', 'Answer required').notEmpty();
 
+  //checking that user submitted a valid answer
+  req.checkBody('answer', 'Answer required').notEmpty();
   req.sanitize('answer').escape();
   req.sanitize('answer').trim();
 
-  var errors = req.validationErrors();
+  //if there were any errors with the users answer save them in js object
+  var userAnswerErrors = req.validationErrors();
 
-  if(errors){
-    db.getStep((err, result) => {
+  //if there are errors display the same page with the errors
+  if(userAnswerErrors){
+    db.getSteps((err, result) => {
       if(err) return console.log(err);
       res.render('layout', {
-        result: result.rows[playerStep],
-        errors: errors
+        result: currentStep,
+        errors: userAnswerErrors
       });
     });
+
+    //if no errors check users answer against database
   } else {
-    console.log(playerStep);
-    console.log(req.body.answer);
-    db.getStep((err, result) => {
-      if(err) return console.log(err);
-      if(req.body.answer === result.rows[playerStep].answer){
-        playerStep++;
+    db.getChildren(currentStep, (err, result) => {
+      if(err){
+        throw err;
+      } else {
+        if(result.rows.length > 0) {
+          for(let i = 0; i < result.rows.length; i++){
+            var correct = false;
+            if(result.rows[i].answer == req.body.answer){
+              currentStep = result.rows[i];
+              correct = true;
+              break;
+            }
+          }
+          if(!correct){
+            userAnswerErrors = {
+              'msg': 'Incorrect Answer'
+            };
+          }
+          res.render('layout', {
+            result: currentStep,
+            errors: userAnswerErrors
+          });
+        } else {
+          res.end('<p>You Win!</p>'); //this is a placeholder, for now there is no win screen so we display this
+        }
       }
-      
-      res.render('layout', {
-        result: result.rows[playerStep]
-      });
     });
   }
 });

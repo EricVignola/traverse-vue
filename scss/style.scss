@@ -1,0 +1,6 @@
+$background-color: #f9f9f9; //creating a sass variable to hold a background color
+
+//setting the background color of body to variable defined above
+body {
+  background-color: $background-color;
+}

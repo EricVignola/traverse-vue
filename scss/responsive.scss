@@ -1,0 +1,79 @@
+/******************************************************************************
+START OF RESPONSIVE GRID HANDMADE WITH LOVE FOR MOBILE FIRST
+******************************************************************************/
+
+//make sure all elements have their padding and border included in their total
+//width and height
+html {
+  box-sizing: border-box;
+}
+
+//all elements and psuedo elements should inherit box-sizing: border-box
+//note that '*' does not include psuedo elements so we have to explicitely
+//reference them
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+//creating a container that is centered horizontally and that will house all of
+//our rows and all of our columns
+.container {
+  margin: 0 auto; //
+  padding: 0 10px; //padding top is 0, right, left, and bottom are all 10px padding
+  max-width: 1000px; //container will never be larger than 1000px
+}
+
+.row::before,
+.row::after {
+  display: table;
+  content: "";
+  //this makes sure that all columns (which will be children of row) will have
+  //their clear property set to both. Clear makes sure that two elements that
+  //float in the same direction (even if their is space for the element) will
+  //move down to the next line
+  clear: both;
+}
+
+
+.one,
+.one-third,
+.two-thirds,
+.one-fourth,
+.half {
+  width: 100%;
+}
+
+
+
+@media screen and (min-width: 800px) {
+  .one {
+    width: 100%;
+  }
+
+  .half {
+    width: (100% / 2);
+  }
+
+  .one-third {
+    width: (100% / 3);
+  }
+
+  .two-thirds {
+    width: (100% / 3 * 2);
+  }
+
+  .one-fourth {
+    width: (100% / 4);
+  }
+
+  .column {
+    float: left;
+  }
+}
+
+.img-responsive {
+  max-width: 100%;
+  height: auto;
+}

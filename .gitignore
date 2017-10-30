@@ -99,3 +99,6 @@ typings/
 *.css.map
 
 # End of https://www.gitignore.io/api/sass
+
+# Ignore jshint config file
+.jshintrc
