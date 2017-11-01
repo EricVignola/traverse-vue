@@ -3,11 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--build:css css/production.min.css-->
-    <link rel="stylesheet" href="/css/normalize.css">
-    <link rel="stylesheet" href="/css/responsive.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <!-- endbuild -->
+    <link rel="stylesheet" href="css/production.min.css">
     <title></title>
   </head>
   <body>

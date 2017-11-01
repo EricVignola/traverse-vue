@@ -10,14 +10,14 @@ const express = require('express'),
 const PORT = 3000;
 
 //letting express know where to find our css, js, and img
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(path.join(__dirname + '/dist/')));
 
 //connect to db using the dbCon.js module
 db.connect();
 
 //setting hogan as our templating engine
 app.engine('hjs', hjs); //the hjs in single quotes lets express know what file extension to use hogan templating on
-app.set('views', path.join(__dirname + "/views"));
+app.set('views', path.join(__dirname + "/dist"));
 app.set('view engine', 'hjs');
 
 //we are letting express know what the name of our partials are for templating purposes

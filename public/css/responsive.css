@@ -1,0 +1,46 @@
+/******************************************************************************
+START OF RESPONSIVE GRID HANDMADE WITH LOVE FOR MOBILE FIRST
+******************************************************************************/
+html {
+  box-sizing: border-box; }
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit; }
+
+.container {
+  margin: 0 auto;
+  padding: 0 10px;
+  max-width: 1000px; }
+
+.row::before,
+.row::after {
+  display: table;
+  content: "";
+  clear: both; }
+
+.one,
+.one-third,
+.two-thirds,
+.one-fourth,
+.half {
+  width: 100%; }
+
+@media screen and (min-width: 800px) {
+  .one {
+    width: 100%; }
+  .half {
+    width: 50%; }
+  .one-third {
+    width: 33.33333%; }
+  .two-thirds {
+    width: 66.66667%; }
+  .one-fourth {
+    width: 25%; }
+  .column {
+    float: left; } }
+
+.img-responsive {
+  max-width: 100%;
+  height: auto; }
