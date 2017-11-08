@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="/css/responsive.css">
     <link rel="stylesheet" href="/css/style.css">
     <!-- endbuild -->
+
+    <!--build:js js/production.min.js-->
+    <script src="/js/bar.js"></script>
+    <script src="/js/foo.js"></script>
+    <!-- endbuild -->
     <title></title>
   </head>
   <body>

@@ -7,6 +7,7 @@ del = require('del'),
 runSequence = require('run-sequence'),
 cssnano = require('gulp-cssnano'),
 gulpIf = require('gulp-if'),
+uglify = require('gulp-uglify'),
 glob = require('glob'); //for some reasion the require name here does not match the package name 'node-glob' in package.json
 
 //delete dist folder
@@ -31,6 +32,7 @@ gulp.task('useref', ['clean', 'sass'], () => {
     return gulp.src('./views/**/*.hjs')
         .pipe(useref({searchPath: './public/'}))
         .pipe(gulpIf('*.css', cssnano()))
+        .pipe(gulpIf('*.js', uglify()))
         .pipe(gulp.dest('dist'));
 });
 

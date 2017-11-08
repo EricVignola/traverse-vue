@@ -1,3 +1,0 @@
-{{#result}}
-<p>{{step_text}}</p>
-{{/result}}

@@ -1,3 +1,0 @@
-{{#errors}}
-<p>{{msg}}</p>
-{{/errors}}
